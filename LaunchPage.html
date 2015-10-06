@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+
+            <title>Launch page</title>
+            
+            <!--Links to MDL stylesheets and scripts-->
+            <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+            <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        </head>
+        <body>    
+            <!--App menu header and drawer-->
+                <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+                  <header class="mdl-layout__header">
+                    <div class="mdl-layout__header-row">
+                      <!-- Title -->
+                      <span class="mdl-layout-title">Menu</span>
+                      <!-- Add spacer, to align navigation to the right -->
+                      <div class="mdl-layout-spacer"></div>
+                      <!-- Navigation. We hide it in small screens. -->
+                    </div>
+                  </header>
+                  <div class="mdl-layout__drawer">
+                    <span class="mdl-layout-title">Menu</span>
+                    <nav class="mdl-navigation">
+                      <a class="mdl-navigation__link" href="">Instructions</a>
+                      <a class="mdl-navigation__link" href="">Record new activity</a>
+                      <a class="mdl-navigation__link" href="">View previous</a>
+                      <a class="mdl-navigation__link" href="">Link</a>
+                    </nav>
+                  </div>
+                  <main class="mdl-layout__content">
+                    <div class="page-content"><!-- Your content goes here --></div>
+                  </main>
+                </div>
+            <center>
+                <div id="doItIcon">
+                <img src="doit.jpeg" style="width:300px;height:128px;margin-top: 50px">
+                </div>
+                <div id="stickMan">
+                    <p>
+                <img src="stickman.jpeg" style="width:250px;height:100px">
+                    </p>
+                </div>
+                <div>
+                    <h5>Please select:</h5>
+                </div>
+                <div id="startNewActivity">
+                    <p>
+                        <!-- Raised button -->
+                        <button class="mdl-button mdl-js-button mdl-button--raised">
+                            START NEW ACTIVITY
+                        </button>
+                    </p>
+                </div>
+
+                <div id="viewPreviousActivity"> 
+                    <p>
+                        <!-- Raised button -->                        
+                        <button class="mdl-button mdl-js-button mdl-button--raised">
+                          VIEW PREVIOUS ACTIVITY
+                        </button>
+                    </p>
+                </div>
+                <div id="information">
+                    <p> 
+                        <style>#foo {position: fixed;bottom: 0; right: 0;}</style>  
+                         <button class="mdl-button mdl-button--icon" style="margin-left: 275px">
+                            <i class="material-icons">info</i>
+                        </button>
+
+                    </p>
+                </div>
+            </center>
+
+
+        </body>
+    </html>
