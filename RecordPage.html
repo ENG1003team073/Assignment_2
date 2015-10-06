@@ -1,0 +1,169 @@
+<!DOCTYPE html>   
+    <html>
+      <head>
+
+        <title>Record page</title>
+        
+        <!--Map style options-->  
+        <style type="text/css">
+          html, body { height: 100%; margin: 0; padding: 0; }
+          #map { height: 50%; width: 50%; top: 15%; left: 25%;}
+        </style>
+
+        <!--Links to MDL stylesheets and scripts-->
+        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.indigo-pink.min.css">
+        <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
+        <!-- API key and sensor = true ????? need to check how this works -->
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=&amp;callback=initMap">
+        </script>
+
+      </head>
+      <body>
+
+        <!--App menu header and drawer-->
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+          <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+              <!-- Title -->
+              <span class="mdl-layout-title">Menu</span>
+              <!-- Add spacer, to align navigation to the right -->
+              <div class="mdl-layout-spacer"></div>
+            </div>
+          </header>
+          <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Menu</span>
+            <nav class="mdl-navigation">
+              <a class="mdl-navigation__link" href="">Instructions</a>
+              <a class="mdl-navigation__link" href="">Launch page</a>
+              <a class="mdl-navigation__link" href="">View previous</a>
+              <a class="mdl-navigation__link" href="">Link</a>
+            </nav>
+          </div>
+          <main class="mdl-layout__content">
+            <div class="page-content"><!-- Your content goes here --></div>
+          </main>
+        </div>
+        
+        <div align="center" id="map"></div>
+        <div id="currentPosition"></div>
+        <div id="currentSpeed"></div>
+        <div id="positionAccuracy"></div>
+
+        <script type="text/javascript">
+            
+            //global variables 
+            var map, position;
+            var startLatitude, startLongitude, startSpeed, startAccuracy; 
+            var currentLatitude = null, currentLongitude = null, currentSpeed, currentAccuracy; 
+           
+            //html output variables
+            var currentPosition = document.getElementById("currentPosition");
+            var currentSpeed = document.getElementById("currentSpeed"); 
+            var positionAccuracy = document.getElementById("positionAccuracy");
+            
+            //testing for the availability of geolocation services
+            if ("geolocation" in navigator){
+                //geolocation is available
+            }
+            else {
+                //geolocation is not available
+                alert("Geolocation is not available at this time");
+            }
+            
+            //once the user begins recording, the getCurrentPosition() method is called to record the start of the route
+            var currentID = navigator.geolocation.watchPosition(getStartPositionData, handleError, positionOptions); 
+                
+            //after the getCurrentPosition() method has executed, the user's location is updated via the watchPosition() method
+            var watchID = navigator.geolocation.watchPosition(getPositionData, handleError, positionOptions);
+            
+            //GETCURRENTPOSITION() AND WATCHPOSITION() CALLBACK FUNCTIONS
+            
+            // getCurrentPosition() success callback function
+            var getStartPositionData = function(position){
+                    startLatitude = position.coords.latitude;
+                    startLongitude = position.coords.longitude;
+                    startSpeed = position.coords.speed;
+                    startAccuracy = position.coords.accuracy;      
+            }
+            
+            // watchPosition() success callback function
+            var getPositionData = function(position){
+                    currentLatitude = position.coords.latitude;
+                    currentLongitude = position.coords.longitude;
+                    currentSpeed = position.coords.speed;
+                    currentAccuracy = position.coords.accuracy;      
+            }
+                    
+            // getCurrentPosition() and watchPosition() error callback function        
+            var handleError = function(error){
+                alert("Error: Position currently unavailable");
+            }
+                
+            // getCurrentPosition() and watchPosition() positionOptions object
+            var positionOptions = {
+                enableHighAccuracy: true,
+                maximumAge: 30000,
+                timeout : 30000
+            };
+            
+            //displaying position data and accuracy to the page
+            //initially displaying start position data
+            while ((currentLatitude === null) && (currentLongitude === null)){
+                currentPosition.innerHTML = "You are currently at: " + startLatitude + ", " + startLongitude;
+                currentSpeed.innerHTML = "Your current speed is: " + startSpeed;
+                positionAcuracy.innerHTML = "Reading accuracy: " + startAccuracy;
+            }
+            //displaying current position data once watchPosition() executes
+            currentPosition.innerHTML = "You are currently at: " + currentLatitude + ", " + currentLongitude;
+            currentSpeed.innerHTML = "Your current speed is: " + currentSpeed;
+            positionAcuracy.innerHTML = "Reading accuracy: " + accuracy;
+            
+            
+            //creating map showing data        
+            function createMap() {
+                var startLatAndLong = new google.maps.LatLng(startLatitude, startLongitude);
+                var currentLatAndLong = new google.maps.LatLng(currentLatitude, currentLongitude);
+                
+                //map to display route
+                map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                
+                //ensuring that map is always centered at the user's current position- map inititially centered at start position
+                while ((currentLatitude === null) && (currentLongitude === null)){
+                    var mapCenter = startLatAndLong;
+                }
+                //map centered at current position once watchPosition() executes 
+                mapCenter = currentLatAndLong;
+                
+                var mapOptions = {
+                    center: mapCenter,
+                    zoom: 10,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                map.style.height = '500px'; // map styling height;
+                map.style.width = '500px'; // map styling width
+
+                //marker to display start of route
+                var markerOptionsStart = {
+                    position: startLatAndLong,
+                    map: map,
+                    title: 'Start'
+                };
+                var markerStart = new google.maps.Marker(markerOptionsStart);
+            }
+
+            
+            /* end of route, display another marker
+            var markerOptionsEnd = {
+                    position: endLatAndLong,
+                    map: map,
+                    title: 'End'
+            }
+            var markerEnd = new google.maps.Marker(markerOptionsEnd);  
+            */
+            
+             </script>
+      </body>
+    </html>
