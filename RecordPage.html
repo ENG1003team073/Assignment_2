@@ -72,7 +72,7 @@
             }
             
             //once the user begins recording, the getCurrentPosition() method is called to record the start of the route
-            var currentID = navigator.geolocation.watchPosition(getStartPositionData, handleError, positionOptions); 
+            var currentID = navigator.geolocation.getCurrentPosition(getStartPositionData, handleError, positionOptions); 
                 
             //after the getCurrentPosition() method has executed, the user's location is updated via the watchPosition() method
             var watchID = navigator.geolocation.watchPosition(getPositionData, handleError, positionOptions);
